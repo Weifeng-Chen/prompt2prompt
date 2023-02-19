@@ -256,9 +256,9 @@ class Prompt2PromptPipeline(StableDiffusionPipeline):
         ptp_utils.view_images(np.stack(images, axis=0))
         
 
-    def show_self_attention_comp(self, attention_store: AttentionStore, res: int, from_where: List[str],
+    def show_self_attention_comp(self, prompts, attention_store: AttentionStore, res: int, from_where: List[str],
                             max_com=10, select: int = 0):
-        attention_maps = self.aggregate_attention(attention_store, res, from_where, False, select).numpy().reshape((res ** 2, res ** 2))
+        attention_maps = self.aggregate_attention(prompts, attention_store, res, from_where, False, select).numpy().reshape((res ** 2, res ** 2))
         u, s, vh = np.linalg.svd(attention_maps - np.mean(attention_maps, axis=1, keepdims=True))
         images = []
         for i in range(max_com):
